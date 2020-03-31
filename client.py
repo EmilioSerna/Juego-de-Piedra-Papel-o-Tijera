@@ -2,6 +2,7 @@
 import xmlrpc.client
 import argparse
 
+
 def despliega_menu():
     print("MENU")
     print("1.Iniciar jugada")
@@ -10,6 +11,25 @@ def despliega_menu():
     print("0.Salir")
     o = input("Opcion:>")
     return int(o)
+
+
+def switch(opcion): # memily
+    '''
+        abre las funciones de acuerdo a la opción que escogiste, por default vuelve a desplegar menu
+        recibe: opcion (int)
+    '''
+    if opcion == 1:
+        iniciar_jugada()
+    elif opcion == 2:
+        hay_jugadores()
+    elif opcion == 3:
+        mostrar_partida()
+    elif opcion == 0:
+        salir()
+    else:
+        print("Escribe una opción")
+        print("------------------")
+        despliega_menu()
 
 
 def main(jugador):
@@ -26,7 +46,7 @@ def main(jugador):
                 print(j)
             if opcion == 2:
                 n = proxy.numero_jugadores()
-                print("Jugadores:",n)
+                print("Jugadores:", n)
             if opcion == 3:
                 d = proxy.deck()
                 print(d)
@@ -39,8 +59,9 @@ def main(jugador):
 
 
 if __name__ == "__main__":
-    parse =argparse.ArgumentParser()
-    parse.add_argument("-j","--jugador",dest="jugador",required=False,default="Fede")
+    parse = argparse.ArgumentParser()
+    parse.add_argument("-j", "--jugador", dest="jugador",
+                       required=False, default="Fede")
     args = parse.parse_args()
     jugador = args.jugador
     main(jugador)
