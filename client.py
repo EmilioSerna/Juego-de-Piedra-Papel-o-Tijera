@@ -1,25 +1,30 @@
 #!/usr/bin/python
 import xmlrpc.client
 import argparse
+import server
 
 
 def despliega_menu():
-    print("MENU")
-    print("1.Iniciar jugada")
-    print("2.Preguntar si hay más jugadores")
-    print("3.Mostrar partida")
-    print("0.Salir")
-    o = input("Opcion:>")
+    print("--------------------------\n")
+    print("** MENU **\n")
+    print("1.- Iniciar jugada")
+    print("2.- Jugadores en la partida")
+    print("3.- Mostrar partida")
+    print("0.- Salir")
+    o = input("\nOpción:> ")
     return int(o)
 
 
 def main(jugador):
-    print("Iniciamos!")
+    print("\n== JUEGO DE PIEDRA, PAPEL O TIJERA ==\n")
+    print("Iniciando...\n")
+    keyboardyes = KeyboardInterrupt
     proxy = xmlrpc.client.ServerProxy('http://localhost:9000')
     try:
         opcion = 99
         while opcion != 0:
             opcion = despliega_menu()
+            print("\n")
             if opcion == 0:
                 break
             if opcion == 1:
@@ -27,16 +32,17 @@ def main(jugador):
                 print(j)
             if opcion == 2:
                 n = proxy.numero_jugadores()
-                print("Jugadores:", n)
+                print("Jugadores:", n, "jugadores.")
             if opcion == 3:
                 d = proxy.deck()
                 print(d)
-        print("Saliendo")
+                
+        print("¡Gracias por jugar!\n")
 
     except ConnectionError:
-        print("Se desconecto el Server")
+        print("Se desconectó el servidor o bien, nunca se encendió.\n")
     except KeyboardInterrupt:
-        print("Usuario cancela programa")
+        print("Usuario: " + jugador +  " ha cancelado la partida.\n")
 
 
 if __name__ == "__main__":

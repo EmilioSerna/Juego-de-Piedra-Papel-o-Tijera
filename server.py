@@ -11,7 +11,6 @@ class Juego:
     def __init__(self):
         self.jugadores = {}
         self.opciones = ['Piedra', 'Papel', 'Tijera']
-
     def mano(self, jugador):
         i = random.randint(0, 2)
         self.jugadores[jugador] = self.opciones[i]
@@ -35,6 +34,7 @@ def agrega_jugador(jugador):
 
 
 def numero_jugadores():
+    print(j.jugadores)
     return len(j.jugadores)
 
 
@@ -48,10 +48,10 @@ def main():
     server.register_function(deck)
     # Start the server
     try:
-        print('Usa Control-C para salir')
+        print('Usa Control-C para salir.')
         server.serve_forever()
     except KeyboardInterrupt:
-        print('Exiting')
+        print('Saliendo...')
 
 
 if __name__ == "__main__":
