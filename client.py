@@ -13,25 +13,6 @@ def despliega_menu():
     return int(o)
 
 
-def switch(opcion): # memily
-    '''
-        abre las funciones de acuerdo a la opción que escogiste, por default vuelve a desplegar menu
-        recibe: opcion (int)
-    '''
-    if opcion == 1:
-        iniciar_jugada()
-    elif opcion == 2:
-        hay_jugadores()
-    elif opcion == 3:
-        mostrar_partida()
-    elif opcion == 0:
-        salir()
-    else:
-        print("Escribe una opción")
-        print("------------------")
-        despliega_menu()
-
-
 def main(jugador):
     print("Iniciamos!")
     proxy = xmlrpc.client.ServerProxy('http://localhost:9000')
