@@ -11,9 +11,23 @@ def despliega_menu():
     print("1.- Iniciar jugada")
     print("2.- Jugadores en la partida")
     print("3.- Mostrar partida")
+    print("4.- FAQ")
     print("0.- Salir")
     o = input("\nOpción:> ")
     return int(o)
+
+
+def faq():
+    print("-¿Es esto realmente un FAQ?")
+    print("     No, son preguntas hechas y respondidas por Emilio")
+    print("-¿De qué me sirve esto?")
+    print("     No lo sé, sinceramente")
+    print("-¿Cómo se juega?")
+    print("     Cuando entras al servidor por primera vez, eres observador")
+    print("     si aún no tienes jugada tienes que presionar 1 para que se genere una mano")
+    print("-¿Cómo veo quién ganó?")
+    print("     Selecciona la opción 3")
+    print("\n")
 
 
 def main(jugador):
@@ -26,16 +40,22 @@ def main(jugador):
     try:
         opcion = 99
         cantidad_desconectados_pasada = 0
+        print("Entraste como Observador")
+        primera_vez = True  # para que no imprima quién se desconectó cuando recién entras
         while opcion != 0:
 
-            cantidad_desconectados = proxy.tamaño_desconectados() # verifica el num de jugadores desconectados
-            mensaje = proxy.checar_jugadores() # mensaje que regresa server.checar_jugadores()
+            # verifica el num de jugadores desconectados
+            cantidad_desconectados = proxy.tamaño_desconectados()
+            # mensaje que regresa server.checar_jugadores()
+            mensaje = proxy.checar_jugadores()
 
-            if cantidad_desconectados_pasada < cantidad_desconectados: # esto es para que no imprima cada ciclo
-                print(mensaje)
+            # esto es para que no imprima cada ciclo
+            if cantidad_desconectados_pasada < cantidad_desconectados:
                 # esto no hace referencia a otro objeto, sino lo copia
                 cantidad_desconectados_pasada = copy.copy(
                     cantidad_desconectados)
+                if primera_vez == False:
+                    print(mensaje)
 
             opcion = despliega_menu()
             print("\n")
@@ -48,28 +68,30 @@ def main(jugador):
             if opcion == 2:
                 n = proxy.numero_jugadores()
                 print("Jugadores:", n, "jugadores.")
-                # AQUÍ DEBERÁ CALCULAR EL QUE GANÓ
             if opcion == 3:
                 d = proxy.deck()
-                print(list(d[0], d[1]))
-                
+                print(d)
+                #print(list(d[0], d[1]))
+
                 winner = ""
                 if (len(d) != 0 or len(d) != 1):
-                   #Aquí va el método/función que determina quien gana.
-                   #Hay que meterlo en server.py para que el mensaje de ganador se comunique
-                   #a todos los clientes.
-                   pass
+                    # Aquí va el método/función que determina quien gana.
+                    # Hay que meterlo en server.py para que el mensaje de ganador se comunique
+                    # a todos los clientes.
+                    pass
                 else:
-                    print("Sería recomendable hacer una jugada antes de saber quién ganó.")
-
-                
-
+                    print(
+                        "Sería recomendable hacer una jugada antes de saber quién ganó.")
+            if opcion == 4:
+                faq()
+            primera_vez = False
         print("¡Gracias por jugar!\n")
 
     except ConnectionError:
         print("Error de conexión con el servidor.\n")
     except KeyboardInterrupt:
-        print("Usuario: " + jugador + "haz abandonado la partida.\n")
+        print("Has abandonado la partida.\n")
+        proxy.desconectar_jugador(jugador)
 
 
 if __name__ == "__main__":
