@@ -2,6 +2,7 @@
 import xmlrpc.client
 import argparse
 import server
+import copy
 
 
 def despliega_menu():
@@ -19,13 +20,27 @@ def main(jugador):
     print("\n== JUEGO DE PIEDRA, PAPEL O TIJERA ==\n")
     print("Iniciando...\n")
     keyboardyes = KeyboardInterrupt
-    proxy = xmlrpc.client.ServerProxy('http://localhost:9000')
+    ip = 'localhost'
+    puerto = 9000
+    proxy = xmlrpc.client.ServerProxy('http://' + ip + ':' + str(puerto))
     try:
         opcion = 99
+        cantidad_desconectados_pasada = 0
         while opcion != 0:
+
+            cantidad_desconectados = proxy.tamaño_desconectados()
+            mensaje = proxy.checar_jugadores()
+
+            if cantidad_desconectados_pasada < cantidad_desconectados:
+                print(mensaje)
+                # esto no hace referencia a otro objeto, sino lo copia
+                cantidad_desconectados_pasada = copy.copy(
+                    cantidad_desconectados)
+
             opcion = despliega_menu()
             print("\n")
             if opcion == 0:
+                proxy.desconectar_jugador(jugador)
                 break
             if opcion == 1:
                 j = proxy.agrega_jugador(jugador)
@@ -33,16 +48,17 @@ def main(jugador):
             if opcion == 2:
                 n = proxy.numero_jugadores()
                 print("Jugadores:", n, "jugadores.")
+                # AQUÍ DEBERÁ CALCULAR EL QUE GANÓ
             if opcion == 3:
                 d = proxy.deck()
                 print(d)
-                
+
         print("¡Gracias por jugar!\n")
 
     except ConnectionError:
-        print("Se desconectó el servidor o bien, nunca se encendió.\n")
+        print("Error de conexión con el servidor.\n")
     except KeyboardInterrupt:
-        print("Usuario: " + jugador +  " ha cancelado la partida.\n")
+        print("Usuario: " + jugador + "se ha salido de la partida.\n")
 
 
 if __name__ == "__main__":
