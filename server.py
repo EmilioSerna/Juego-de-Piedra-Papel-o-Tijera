@@ -52,7 +52,10 @@ def desconectar_jugador(jugador):
         recibe: nombre del jugador
     '''
     j.jugadores_desconectados.append(jugador)
-    del(j.jugadores[jugador]) # elimina el jugador del diccionario
+    try:
+        del(j.jugadores[jugador]) # elimina el jugador del diccionario
+    except:
+        pass
     return 0
 
 
