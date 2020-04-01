@@ -28,10 +28,10 @@ def main(jugador):
         cantidad_desconectados_pasada = 0
         while opcion != 0:
 
-            cantidad_desconectados = proxy.tamaño_desconectados()
-            mensaje = proxy.checar_jugadores()
+            cantidad_desconectados = proxy.tamaño_desconectados() # verifica el num de jugadores desconectados
+            mensaje = proxy.checar_jugadores() # mensaje que regresa server.checar_jugadores()
 
-            if cantidad_desconectados_pasada < cantidad_desconectados:
+            if cantidad_desconectados_pasada < cantidad_desconectados: # esto es para que no imprima cada ciclo
                 print(mensaje)
                 # esto no hace referencia a otro objeto, sino lo copia
                 cantidad_desconectados_pasada = copy.copy(
