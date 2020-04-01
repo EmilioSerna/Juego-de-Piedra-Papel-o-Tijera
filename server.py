@@ -62,7 +62,8 @@ def checar_jugadores():
     '''
     if len(j.jugadores_desconectados) > 0:
         ultimo_desconectado = j.jugadores_desconectados[-1]
-        mensaje = ("\n¡EL JUGADOR " + ultimo_desconectado + " SE HA DESCONECTADO!\n")
+        mensaje = ("\n¡El jugador " + ultimo_desconectado + " se ha desconectado!\n" 
+                    + "Profesor, pónganos un 💯")
         return mensaje
     else:
         return "Esto es un bug, línea 67, llame al administrador, AYUDAAAAA"
@@ -87,15 +88,18 @@ def main():
     server.register_function(checar_jugadores)
     server.register_function(tamaño_desconectados)
     # Start the server
-    print('\nIniciando servidor...')
+    print('\nIniciando servidor...\n')
     try:
-        print('Servidor iniciado')
-        print('Dirección IP:', ip)
-        print('Puerto:', puerto)
+        print("===========================\n")
+        print("Información del servidor: ")
+        print('- Servidor iniciado')
+        print('- Dirección IP:', ip)
+        print('- Puerto:', puerto)
+        print("\n===========================")
         print('\nUsa Control-C para salir.')
         server.serve_forever()
     except KeyboardInterrupt:
-        print('Saliendo...')
+        print('\nSaliendo...\n')
 
 
 if __name__ == "__main__":

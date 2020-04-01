@@ -51,14 +51,25 @@ def main(jugador):
                 # AQUÍ DEBERÁ CALCULAR EL QUE GANÓ
             if opcion == 3:
                 d = proxy.deck()
-                print(d)
+                print(list(d[0], d[1]))
+                
+                winner = ""
+                if (len(d) != 0 or len(d) != 1):
+                   #Aquí va el método/función que determina quien gana.
+                   #Hay que meterlo en server.py para que el mensaje de ganador se comunique
+                   #a todos los clientes.
+                   pass
+                else:
+                    print("Sería recomendable hacer una jugada antes de saber quién ganó.")
+
+                
 
         print("¡Gracias por jugar!\n")
 
     except ConnectionError:
         print("Error de conexión con el servidor.\n")
     except KeyboardInterrupt:
-        print("Usuario: " + jugador + "se ha salido de la partida.\n")
+        print("Usuario: " + jugador + "haz abandonado la partida.\n")
 
 
 if __name__ == "__main__":
