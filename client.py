@@ -3,7 +3,7 @@ import xmlrpc.client
 import argparse
 import server
 import copy
-
+import time
 
 def despliega_menu():
     try:
@@ -27,7 +27,7 @@ def despliega_menu():
 
 def faq():
     print("-¿Es esto realmente un FAQ?")
-    print("     No, son preguntas hechas y respondidas por Emilio")
+    print("     No, son preguntas hechas y respondidas por Emilio. Por eso están mal respondidas. ")
     
     print("-¿De qué me sirve esto?")
     print("     No lo sé, sinceramente")
@@ -38,6 +38,8 @@ def faq():
     print("     Selecciona la opción 3")
     print("-¿Por qué no puedo seleccionar mi mano?")
     print("     Es más divertido cuando se lo dejas al azar")
+    print("¿Es este acaso un easter egg de Octavio?")
+    print("     La vida es dura, pero más dura es la verdura.")
     print("\n")
 
 
@@ -91,17 +93,37 @@ def main(jugador):
             elif opcion == 3:
                 d = proxy.deck()
                 print(d)
-                # print(list(d[0], d[1]))
+            
 
                 winner = ""
                 if (len(d) != 0 or len(d) != 1):
                     # Aquí va el método/función que determina quien gana.
                     # Hay que meterlo en server.py para que el mensaje de ganador se comunique
                     # a todos los clientes.
-                    pass
+
+                    expected_value = next(iter(d.values())) #Toma un valor, ejemplo 'Piedra' en los valores del diccionario de jugadores.
+                    all_equal = all(value == expected_value for value in d.values()) #Verifica si es igual a todos los valores dentro del diccionario.
+
+                    if (all_equal == True): #Si todos los valores son iguales, significa un empate entre todos.
+                        print("Hubo un empate. Recomendamos reiniciar el juego.")
+                        
+                        for jugador, jugada in d.items(): #Este for imprime únicamente, con formato, la jugada de los jugadores.
+                            print(jugador, "con", jugada)                                
+                            '''
+                            Ejemplo: 
+                                - Octavio con tijeras.
+                                - Emilio con tijeras.
+                                - JuanPi con piedra.
+                                                            '''
+                        time.sleep(3)    
+                        despliega_menu #<-- Aquí podemos hacer que abra el menú después de un poco de tiempo.
+                    else:
+                        pass
+                    #Aquí si debería de ir los 100000000000000000000 ifs que comparan las jugadas.
                 else:
                     print(
-                        "Sería recomendable hacer una jugada antes de saber quién ganó.")
+                        "Sería recomendable hacer una jugada o agregar jugadores antes de jugar " +
+                          "o saber quién ganó.")
             elif opcion == 4:
                 mano = proxy.deck()[jugador]
                 print("Tu mano es:", mano)
