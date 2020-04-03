@@ -28,7 +28,6 @@ def despliega_menu():
 def faq():
     print("-¿Es esto realmente un FAQ?")
     print("     No, son preguntas hechas y respondidas por Emilio. Por eso están mal respondidas. ")
-    
     print("-¿De qué me sirve esto?")
     print("     No lo sé, sinceramente")
     print("-¿Cómo se juega?")
@@ -40,6 +39,8 @@ def faq():
     print("     Es más divertido cuando se lo dejas al azar")
     print("¿Es este acaso un easter egg de Octavio?")
     print("     La vida es dura, pero más dura es la verdura.")
+    print("-¿El Octavio roba FAQs?")
+    print("     Sí, este ni siquiera es tu Easter Egg")
     print("\n")
 
 
