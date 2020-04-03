@@ -8,7 +8,7 @@ import copy
 def despliega_menu():
     print("--------------------------\n")
     print("** MENU **\n")
-    print("1.- Iniciar jugada")
+    print("1.- Cambiar mano")
     print("2.- Jugadores en la partida")
     print("3.- Mostrar partida")
     print("4.- FAQ")
@@ -27,6 +27,8 @@ def faq():
     print("     si aún no tienes jugada tienes que presionar 1 para que se genere una mano")
     print("-¿Cómo veo quién ganó?")
     print("     Selecciona la opción 3")
+    print("-¿Por qué no puedo seleccionar mi mano?")
+    print("     Es más divertido cuando se lo dejas al azar")
     print("\n")
 
 
@@ -40,8 +42,17 @@ def main(jugador):
     try:
         opcion = 99
         cantidad_desconectados_pasada = 0
-        print("Entraste como Observador")
         primera_vez = True  # para que no imprima quién se desconectó cuando recién entras
+
+        if jugador in proxy.deck():  # si existe el jugador en el servidor
+            print("Ya existe el jugador:", jugador,
+                  "\nPor favor, reingresa con otro usuario")
+            opcion = 0
+        else:
+            #print("Entraste como Observador")
+            j = proxy.agrega_jugador(jugador)
+            print("Tu mano es:", j[1])
+
         while opcion != 0:
 
             # verifica el num de jugadores desconectados
@@ -64,14 +75,15 @@ def main(jugador):
                 break
             if opcion == 1:
                 j = proxy.agrega_jugador(jugador)
-                print(j)
+                print("Tu mano es:", j[1])
             if opcion == 2:
                 n = proxy.numero_jugadores()
                 print("Jugadores:", n, "jugadores.")
+                mano = proxy.mi_mano(jugador)
             if opcion == 3:
                 d = proxy.deck()
                 print(d)
-                #print(list(d[0], d[1]))
+                # print(list(d[0], d[1]))
 
                 winner = ""
                 if (len(d) != 0 or len(d) != 1):
