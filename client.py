@@ -6,24 +6,33 @@ import copy
 
 
 def despliega_menu():
-    print("--------------------------\n")
-    print("** MENU **\n")
-    print("1.- Cambiar mano")
-    print("2.- Jugadores en la partida")
-    print("3.- Mostrar partida")
-    print("4.- FAQ")
-    print("0.- Salir")
-    o = input("\nOpción:> ")
-    return int(o)
+    try:
+        print("--------------------------\n")
+        print("** MENU **\n")
+        print("1.- Cambiar mano")
+        print("2.- Jugadores en la partida")
+        print("3.- Mostrar partida")
+        print("4.- Mostrar mi mano")
+        print("5.- FAQ")
+        print("0.- Salir")
+        o = input("\nOpción:> ")
+        return int(o)
+    except KeyboardInterrupt:
+        print("Has abandonado la partida.\n")
+        proxy.desconectar_jugador(jugador)
+    except:
+        print("¡Elige una opción!")
+        return despliega_menu()
 
 
 def faq():
     print("-¿Es esto realmente un FAQ?")
     print("     No, son preguntas hechas y respondidas por Emilio")
+    
     print("-¿De qué me sirve esto?")
     print("     No lo sé, sinceramente")
     print("-¿Cómo se juega?")
-    print("     Cuando entras al servidor por primera vez, eres observador")
+    print("     Cuando entras al servidor por primera vez, se te asigna una mano automáticamente")
     print("     si aún no tienes jugada tienes que presionar 1 para que se genere una mano")
     print("-¿Cómo veo quién ganó?")
     print("     Selecciona la opción 3")
@@ -73,14 +82,13 @@ def main(jugador):
             if opcion == 0:
                 proxy.desconectar_jugador(jugador)
                 break
-            if opcion == 1:
+            elif opcion == 1:
                 j = proxy.agrega_jugador(jugador)
-                print("Tu mano es:", j[1])
-            if opcion == 2:
+                print("Tu nueva mano es:", j[1])
+            elif opcion == 2:
                 n = proxy.numero_jugadores()
-                print("Jugadores:", n, "jugadores.")
-                mano = proxy.mi_mano(jugador)
-            if opcion == 3:
+                print("Jugador(es):", n, "jugador(es).")
+            elif opcion == 3:
                 d = proxy.deck()
                 print(d)
                 # print(list(d[0], d[1]))
@@ -94,7 +102,10 @@ def main(jugador):
                 else:
                     print(
                         "Sería recomendable hacer una jugada antes de saber quién ganó.")
-            if opcion == 4:
+            elif opcion == 4:
+                mano = proxy.deck()[jugador]
+                print("Tu mano es:", mano)
+            elif opcion == 5:
                 faq()
             primera_vez = False
         print("¡Gracias por jugar!\n")
@@ -103,6 +114,8 @@ def main(jugador):
         print("Error de conexión con el servidor.\n")
     except KeyboardInterrupt:
         print("Has abandonado la partida.\n")
+        proxy.desconectar_jugador(jugador)
+    except:
         proxy.desconectar_jugador(jugador)
 
 
