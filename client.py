@@ -93,7 +93,7 @@ def main(jugador):
                 print("Jugador(es):", n, "jugador(es).")
             elif opcion == 3:
                 d = proxy.deck()
-                print(d)
+                #print(d)
             
 
                 winner = ""
@@ -125,11 +125,11 @@ def main(jugador):
                         else:
                             if len(winner) > 1:
                                 print("Hubo un empate entre: ")
+                                print(winner)
                                 for jugador in winner:
                                     print(jugador)
                             else:
                                 print(f"Ganador: {winner[0]}")
-                    #Aquí si debería de ir los 100000000000000000000 ifs que comparan las jugadas.
                 else:
                     print(
                         "Sería recomendable hacer una jugada o agregar jugadores antes de jugar " +
@@ -145,7 +145,9 @@ def main(jugador):
     except ConnectionError:
         print("Error de conexión con el servidor.\n")
     except KeyboardInterrupt:
-        print("Has abandonado la partida.\n")
+        pass
+    except ValueError as error:
+        print(error)
         proxy.desconectar_jugador(jugador)
     except:
         proxy.desconectar_jugador(jugador)
