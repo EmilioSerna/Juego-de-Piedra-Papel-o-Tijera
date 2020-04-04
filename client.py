@@ -1,4 +1,15 @@
 #!/usr/bin/python
+
+# Equipo: Mustafar
+# Fecha: 03 de abril de 2020
+# Integrantes:
+#
+#   Félix López Juan Pablo
+#   López Velásquez Octavio
+#   Serna Navarro Ángel Emilio
+""" Juego de piedra, papel o tijera (versión online 100Gbps 4k 60fps 144Hz Dolby Atmos 32:9 1 link (literalmente)) 
+    Programa: Cliente.
+"""
 import xmlrpc.client
 import argparse
 import server
@@ -90,8 +101,7 @@ def main(jugador):
             # esto es para que no imprima cada ciclo
             if cantidad_desconectados_pasada < cantidad_desconectados:
                 # esto no hace referencia a otro objeto, sino lo copia
-                cantidad_desconectados_pasada = copy.copy(
-                    cantidad_desconectados)
+                cantidad_desconectados_pasada = copy.copy(cantidad_desconectados)
                 if primera_vez == False:
                     print(mensaje)
 
@@ -128,7 +138,7 @@ def main(jugador):
                     ):  # Si todos los valores son iguales, significa un empate entre todos.
                         print("Hubo un empate. Recomendamos reiniciar el juego.")
 
-                        for (jugador, jugada) in (d.items()):
+                        for (jugador, jugada) in d.items():
                             # Este for imprime únicamente, con formato, la jugada de los jugadores.
                             print(jugador, "con", jugada)
                             """
@@ -153,8 +163,8 @@ def main(jugador):
                             else:
                                 mano = proxy.deck()[jugador]
                                 print(f"Ganador: {winner[0]}", "con", d[winner[0]])
-                                #print(winner)
-                                #print("¡Has ganado!")
+                                # print(winner)
+                                # print("¡Has ganado!")
                                 if jugador not in winner:
                                     proxy.desconectar_jugador(jugador)
                                     print(
