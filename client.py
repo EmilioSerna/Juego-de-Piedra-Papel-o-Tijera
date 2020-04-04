@@ -90,7 +90,8 @@ def main(jugador):
             # esto es para que no imprima cada ciclo
             if cantidad_desconectados_pasada < cantidad_desconectados:
                 # esto no hace referencia a otro objeto, sino lo copia
-                cantidad_desconectados_pasada = copy.copy(cantidad_desconectados)
+                cantidad_desconectados_pasada = copy.copy(
+                    cantidad_desconectados)
                 if primera_vez == False:
                     print(mensaje)
 
@@ -127,12 +128,8 @@ def main(jugador):
                     ):  # Si todos los valores son iguales, significa un empate entre todos.
                         print("Hubo un empate. Recomendamos reiniciar el juego.")
 
-                        for (
-                            jugador,
-                            jugada,
-                        ) in (
-                            d.items()
-                        ):  # Este for imprime únicamente, con formato, la jugada de los jugadores.
+                        for (jugador, jugada) in (d.items()):
+                            # Este for imprime únicamente, con formato, la jugada de los jugadores.
                             print(jugador, "con", jugada)
                             """
                             Ejemplo: 
@@ -141,7 +138,8 @@ def main(jugador):
                                 - JuanPi con piedra.
                                                             """
                         time.sleep(3)
-                        despliega_menu()  # <-- Aquí podemos hacer que abra el menú después de un poco de tiempo.
+                        # <-- Aquí podemos hacer que abra el menú después de un poco de tiempo.
+                        despliega_menu()
                     else:
                         winner = proxy.definir_ganador()
                         if winner == "empate":
@@ -154,8 +152,9 @@ def main(jugador):
                                     print(jugador)
                             else:
                                 mano = proxy.deck()[jugador]
-                                print(f"Ganador: {winner[0]}")
-                                print("¡Has ganado!")
+                                print(f"Ganador: {winner[0]}", "con", d[winner[0]])
+                                #print(winner)
+                                #print("¡Has ganado!")
                                 if jugador not in winner:
                                     proxy.desconectar_jugador(jugador)
                                     print(
