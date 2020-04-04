@@ -1,0 +1,2 @@
+Profesor, el programa puede tener cierto "delay" entre una función y otra. Creemos que es
+debido a las conexiones que se hacen con el servidor desde cliente y viceversa.
