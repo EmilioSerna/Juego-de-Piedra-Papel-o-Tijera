@@ -117,9 +117,18 @@ def main(jugador):
                                 - JuanPi con piedra.
                                                             '''
                         time.sleep(3)    
-                        despliega_menu #<-- Aquí podemos hacer que abra el menú después de un poco de tiempo.
+                        despliega_menu() #<-- Aquí podemos hacer que abra el menú después de un poco de tiempo.
                     else:
-                        pass
+                        winner = proxy.definir_ganador()
+                        if winner == "empate":
+                            print("Hubo un empate entre todos los jugadores")
+                        else:
+                            if len(winner) > 1:
+                                print("Hubo un empate entre: ")
+                                for jugador in winner:
+                                    print(jugador)
+                            else:
+                                print(f"Ganador: {winner[0]}")
                     #Aquí si debería de ir los 100000000000000000000 ifs que comparan las jugadas.
                 else:
                     print(
