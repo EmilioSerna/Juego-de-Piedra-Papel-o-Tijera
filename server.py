@@ -10,8 +10,8 @@ class Juego:
     jugadores_desconectados = None
 
     def __init__(self):
-        self.jugadores = {}
-        self.jugadores_desconectados = []
+        self.jugadores = {}  # diccionario
+        self.jugadores_desconectados = []  # lista
         self.opciones = ['Piedra', 'Papel', 'Tijera']
 
     def mano(self, jugador):
@@ -53,7 +53,7 @@ def desconectar_jugador(jugador):
     '''
     j.jugadores_desconectados.append(jugador)
     try:
-        del(j.jugadores[jugador]) # elimina el jugador del diccionario
+        del(j.jugadores[jugador])  # elimina el jugador del diccionario
     except:
         pass
     return 0
@@ -65,11 +65,11 @@ def checar_jugadores():
     '''
     if len(j.jugadores_desconectados) > 0:
         ultimo_desconectado = j.jugadores_desconectados[-1]
-        mensaje = ("\n¡El jugador " + ultimo_desconectado + " se ha desconectado!\n" 
-                    + "Profesor, pónganos un 💯")
+        mensaje = ("\n¡El jugador " + ultimo_desconectado + " se ha desconectado!\n"
+                   + "Profesor, pónganos un 💯")
         return mensaje
     else:
-        return "Esto es un bug, línea 67, llame al administrador, AYUDAAAAA"
+        return "Esto es un bug, línea 72, llame al administrador, AYUDAAAAA"
 
 
 def tamaño_desconectados():
@@ -82,23 +82,35 @@ def tamaño_desconectados():
     else:
         return 0
 
+
 def definir_ganador():
     manos = dict()
     for i in set(j.jugadores.values()):
-        lista = [nombre for nombre in j.jugadores.keys() if j.jugadores[nombre] == i]
-        manos [i] = lista
-        lista.clear()
+        lista = [nombre for nombre in j.jugadores.keys()
+                 if j.jugadores[nombre] == i]
+        manos[i] = lista
+        # lista.clear()
     if len(manos) != 2:
         return "empate"
     else:
-        rules = {"Piedra":"Papel","Tijera":"Piedra","Papel":"Tijera"}   #Un diccionario que indica que le gana a todas las opciones
-        opciones_partida = manos.keys()
-        if rules[opciones_partida[0]] in manos.keys():
-            return manos[1]
+        # Un diccionario que indica que le gana a todas las opciones
+        rules = {
+            "Piedra": "Papel",
+            "Tijera": "Piedra",
+            "Papel": "Tijera"}
+        opciones_partida = list(manos.keys())
+        if rules[opciones_partida[0]] in opciones_partida:
+            i = 0
+            for key, val in manos.items():
+                if i == 1:
+                    print(val)
+                    return val
+                else:
+                    i += 1
         else:
-            return manos[0]
-
-
+            for key, val in manos.items():
+                print(val)
+                return val
 
 
 def main():
